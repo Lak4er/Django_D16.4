@@ -1,0 +1,80 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+News
+{% endblock title %}
+
+
+
+{% block content %}
+   <h1>Все новости</h1>
+   <hr>
+
+    <span style="color: #ffffff;">
+   {% if post %}
+
+       <table>
+           <tr>
+               <td><h2><strong>Дата публикации</strong></h2><p>&nbsp;</p></td>
+               <td><h2><strong>Заголовок</strong></h2><p>&nbsp;</p></td>
+               <td><h2><strong>Первые 20 символов</strong></h2><p>&nbsp;</p></td>
+           </tr>
+           {% for postss in post %}
+               <td><p style="text-align: justify;">{{ postss.time_in_post|date:'d M Y'  }}</p></td>
+
+               <td><p style="text-align: justify;">{{ postss.title}}</p></td>
+
+               <td><p style="text-align: justify;">{{ postss.post_text|truncatechars:20 }}</p></td>
+           </tr>
+           {% endfor %}
+
+      </table>
+
+   {% else %}
+       <h2>Новостей нет!</h2>
+   {% endif %}</span>
+{# Добавляем пагинацию на страницу #}
+
+   {# Информация о предыдущих страницах #}
+   {% if page_obj.has_previous %}
+    <span style="color: #ffffff;">
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {# Информация о текущей странице #}
+   <span style="color: #ffffff;">{{ page_obj.number }}</span>
+
+   {# Информация о следующих страницах #}
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+        </span>
+
+
+{% endblock content %}
+
+{% block found %}
+<span style="color: #ffffff;">
+    <form action="" method="get">
+        {{ filterset.form.as_p }}
+        <input type="submit" value="Найти" />
+    </form>
+</span>
+{% endblock found %}
+
+
+{% block author %}
+{% if is_not_authors %}
+<li class="nav-item"><a class="nav-link" href="upgrade/">Хочу стать автором!</a></li>
+{% else %}
+<li class="nav-item"><a class="nav-link" href="">Вы стали автором</a></li>
+{% endif %}
+{% endblock author %}

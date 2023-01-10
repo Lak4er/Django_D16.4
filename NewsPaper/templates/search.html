@@ -1,0 +1,69 @@
+<!--  наследуемся от шаблона default.html -->
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+
+
+{% block title %}
+Search
+{% endblock title %}
+
+{% block content %}
+  <h1>Все новости</h1>
+   <hr>
+
+    <span style="color: #ffffff;">
+   {% if post %}
+
+       <table>
+           <tr>
+               <td><h2><strong>Дата публикации</strong></h2><p>&nbsp;</p></td>
+               <td><h2><strong>Заголовок</strong></h2><p>&nbsp;</p></td>
+               <td><h2><strong>Первые 20 символов</strong></h2><p>&nbsp;</p></td>
+           </tr>
+           {% for postss in post %}
+               <td><p style="text-align: justify;">{{ postss.time_in_post|date:'d M Y'  }}</p></td>
+
+               <td><p style="text-align: justify;">{{ postss.title}}</p></td>
+
+               <td><p style="text-align: justify;">{{ postss.post_text|truncatechars:20 }}</p></td>
+           </tr>
+           {% endfor %}
+
+      </table>
+
+   {% else %}
+       <h2>Новостей нет!</h2>
+   {% endif %}</span>
+{# Добавляем пагинацию на страницу #}
+
+   {# Информация о предыдущих страницах #}
+   {% if page_obj.has_previous %}
+    <span style="color: #ffffff;">
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {# Информация о текущей странице #}
+   <span style="color: #ffffff;">{{ page_obj.number }}</span>
+
+   {# Информация о следующих страницах #}
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+        </span>
+{% endblock content %}
+
+<!-- В контенте на странице выводим форму поиска постов. -->
+{% block found %}
+    <form action="" method="GET">
+        {{ search_filter.form.as_p }}
+        <a href="" class="sliding-button">Найти</a>
+    </form>
+{% endblock found %}

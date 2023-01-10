@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Здравствуй, {{user.username }} Новая статья в твоём любимом разделе!</h2>
+    <h3> {{ post.head }} </h3>
+    <p> {{ post.post_text|truncatechars:50 }} </p>
+    {% if post.type == 1 %}
+    <p>Статья доступна по <a href="http://127.0.0.1:8000/articles/{{ post.id }}">ссылке</a></p>
+    {% else %}
+    <p>Статья доступна по <a href="http://127.0.0.1:8000/news/{{ post.id }}">ссылке</a></p>
+    {% endif %}
+</body>
+</html>

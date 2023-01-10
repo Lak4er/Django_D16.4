@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+Post
+{% endblock title %}
+{% block content_id %}
+<span style="color: #ffffff;">
+               <p style="text-align: justify;">{{ post.time_in_post|date:'d M Y'  }}</p>
+               <p style="text-align: justify;">{{ post.title|censor }}</p>
+               <p style="text-align: justify;">{{ post.post_text|censor}}</p>
+</span>
+{% endblock content_id %}
