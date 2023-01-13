@@ -17,7 +17,7 @@ def notify_post(sender, instance, action, **kwargs):
         msg = EmailMultiAlternatives(
             subject=f'{instance}',
             body='',
-            from_email='p.opshen@yandex.ru',
+            from_email='',
             to=senders
         )
         msg.attach_alternative(html_content, "text/html")
